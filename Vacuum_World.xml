@@ -5,30 +5,40 @@
 int grid[3][3] = {(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)};
 string Robot = "O";
 
-void Do(string action) { //What action the Robod should do.
-    if(action == "forward") {
+void createBoard(){
+    int board[3][3];
+
+    for (int i = 0; i &lt; 3; i++){
+        for (int j = 0; j &lt; 3; j++){
+            board[i][j];
+        }
+    }
+}
+
+void Do(int action) { //What action the Robod should do.
+    if(action == 1) { //forward
         
     }
-    else if(action == "turn") {
+    else if(action == 2) { //turn
         
     }
-    else if(action == "suck") {
+    else if(action == 3) { //suck
         
     }
 }
 
-void Facing(string direction){ //What direction the Robot is facing.
-    if(direction == "north") {
-        
+int Facing(int direction){ //What direction the Robot is facing.
+    if(direction == 1) { //north
+        return 1;
     }
-    else if(direction == "east") {
-        
+    else if(direction == 2) { //east
+        return 2;
     }
-    else if(direction == "west") {
-        
+    else if(direction == 3) { //west
+        return 3;
     } 
-    else if(direction == "south") {
-        
+    else if(direction == 4) { //south
+        return 4;
     }
 }
 
@@ -40,35 +50,161 @@ void In(int line, int row) { //Where the Robot is at.
     
 }
 
-void old() {
+void old(int x, int y, int direction) {
     
 }
 
-void new() {
+void new(int x, int y, int direction) {
     
 }
 
-void next() {
+void next(int x, int y, int direcion) {
     
+}
+
+bool isLegal(int x, int y, int direction){
+    if(x == 0 &amp;&amp; x == y || y = x + 1 &amp;&amp; direction == 1){
+        return true;
+    }
+    if else(x == 0 &amp;&amp; y == 2 &amp;&amp; direction == 2){
+        return true;
+    }
+    return false;
 }</declaration>
 	<template>
 		<name x="5" y="5">Vacuum_World</name>
+		<parameter>int x, int y</parameter>
 		<declaration>// Place local declarations here.</declaration>
-		<location id="id0" x="-238" y="-76">
+		<location id="id0" x="-323" y="-212">
 		</location>
-		<location id="id1" x="-416" y="-195">
+		<location id="id1" x="136" y="-323">
+			<name x="144" y="-357">ILLEGAL</name>
 		</location>
-		<location id="id2" x="-416" y="-76" color="#ffc0cb">
-			<name x="-459" y="-51">START (0,0)</name>
+		<location id="id2" x="-442" y="-323">
+			<name x="-433" y="-349">LEGAL</name>
 		</location>
-		<init ref="id2"/>
+		<location id="id3" x="-136" y="59">
+		</location>
+		<location id="id4" x="-442" y="-110">
+		</location>
+		<location id="id5" x="25" y="-110">
+		</location>
+		<location id="id6" x="-221" y="-323">
+		</location>
+		<location id="id7" x="-221" y="-110" color="#ffc0cb">
+			<name x="-212" y="-102">START</name>
+		</location>
+		<init ref="id7"/>
 		<transition>
-			<source ref="id2"/>
-			<target ref="id0"/>
+			<source ref="id0"/>
+			<target ref="id7"/>
+			<label kind="assignment" x="-365" y="-170">Do(forward)</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-510" y="-68">!isLegal()</label>
+			<nail x="-493" y="-110"/>
+			<nail x="-493" y="-17"/>
+			<nail x="136" y="-17"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id5"/>
+			<label kind="assignment" x="43" y="-195">Do(turn)</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id6"/>
+			<label kind="assignment" x="51" y="-391">Do(turn)</label>
+			<nail x="136" y="-365"/>
+			<nail x="-221" y="-365"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id1"/>
+			<label kind="guard" x="17" y="-8">!isLegal()</label>
+			<nail x="-136" y="-17"/>
+			<nail x="136" y="-17"/>
+			<nail x="136" y="-221"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="assignment" x="17" y="68">Do(turn)</label>
+			<nail x="178" y="-323"/>
+			<nail x="178" y="59"/>
 		</transition>
 		<transition>
 			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-374" y="-280">!Dirt(x, y)</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id4"/>
+			<label kind="assignment" x="-8" y="119">Do(turn)</label>
+			<nail x="229" y="-323"/>
+			<nail x="229" y="110"/>
+			<nail x="-442" y="110"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-229" y="-416">isLegal()</label>
+			<nail x="25" y="-391"/>
+			<nail x="-442" y="-391"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-374" y="161">isLegal()</label>
+			<nail x="-136" y="153"/>
+			<nail x="-535" y="153"/>
+			<nail x="-535" y="-365"/>
+			<nail x="-442" y="-365"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
 			<target ref="id1"/>
+			<label kind="guard" x="59" y="-136">!isLegal()</label>
+			<nail x="136" y="-110"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-85" y="-314">!isLegal()</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id2"/>
+			<label kind="select" x="-501" y="-221">isLegal()</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-348" y="-348">isLegal()</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-289" y="-42">Facing(south) == true</label>
+			<nail x="-221" y="59"/>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-408" y="-102">Facing(west) == true</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-144" y="-102">Facing(east) == true</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="guard" x="-212" y="-221">Facing(north) == true</label>
 		</transition>
 	</template>
 	<system>// Place template instantiations here.
