@@ -5,6 +5,16 @@
 int grid[3][3] = {(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)};
 string Robot = "O";
 
+void createBoard(){
+    int board[3][3];
+
+    for (int i = 0; i &lt; 3; i++){
+        for (int j = 0; j &lt; 3; j++){
+            board[i][j];
+        }
+    }
+}
+
 void Do(int action) { //What action the Robod should do.
     if(action == 1) { //forward
         
@@ -17,18 +27,18 @@ void Do(int action) { //What action the Robod should do.
     }
 }
 
-void Facing(int direction){ //What direction the Robot is facing.
+int Facing(int direction){ //What direction the Robot is facing.
     if(direction == 1) { //north
-        
+        return 1;
     }
     else if(direction == 2) { //east
-        
+        return 2;
     }
     else if(direction == 3) { //west
-        
+        return 3;
     } 
     else if(direction == 4) { //south
-        
+        return 4;
     }
 }
 
@@ -40,15 +50,15 @@ void In(int line, int row) { //Where the Robot is at.
     
 }
 
-void old() {
+void old(int x, int y, int direction) {
     
 }
 
-void new() {
+void new(int x, int y, int direction) {
     
 }
 
-void next() {
+void next(int x, int y, int direcion) {
     
 }
 
