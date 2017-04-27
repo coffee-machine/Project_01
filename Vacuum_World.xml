@@ -2,17 +2,19 @@
 <!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
 <nta>
 	<declaration>// Place global declarations here.
-int grid[3][3] = {(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)};
-string Robot = "O";
+//int grid[3][3] = {(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)};
+int Robot = 8;
+int x, y, direction;
 
 void createBoard(){
     int board[3][3];
-
-    for (int i = 0; i &lt; 3; i++){
-        for (int j = 0; j &lt; 3; j++){
-            board[i][j];
+    
+    for (x = 0; x &lt; 3; x++){
+        for (y = 0; y &lt; 3; y++){
+            board[x][y] = 0;
         }
     }
+    board[0][0] = Robot;
 }
 
 void Do(int action) { //What action the Robod should do.
@@ -40,13 +42,15 @@ int Facing(int direction){ //What direction the Robot is facing.
     else if(direction == 4) { //south
         return 4;
     }
+
+    return 0;
 }
 
-bool Dirt(int line, int row) { //Where there is dirt at.
+bool Dirt(int x, int y) { //Where there is dirt at.
     return true;
 }
 
-void In(int line, int row) { //Where the Robot is at.
+void In(int x, int y) { //Where the Robot is at.
     
 }
 
@@ -63,17 +67,16 @@ void next(int x, int y, int direcion) {
 }
 
 bool isLegal(int x, int y, int direction){
-    if(x == 0 &amp;&amp; x == y || y = x + 1 &amp;&amp; direction == 1){
+    if((x == 0) &amp;&amp; (x == y) || (y = x + 1) &amp;&amp; (direction == 1)){ //Direction is north
         return true;
     }
-    if else(x == 0 &amp;&amp; y == 2 &amp;&amp; direction == 2){
+    else if(x == 0 &amp;&amp; y == 2 &amp;&amp; direction == 2){ //Direction is east
         return true;
     }
     return false;
 }</declaration>
 	<template>
-		<name x="5" y="5">Vacuum_World</name>
-		<parameter>int x, int y, int direction</parameter>
+		<name x="5" y="5">Template</name>
 		<declaration>// Place local declarations here.</declaration>
 		<location id="id0" x="-323" y="-212">
 		</location>
@@ -217,7 +220,7 @@ bool isLegal(int x, int y, int direction){
 		</transition>
 	</template>
 	<system>// Place template instantiations here.
-Process = Vacuum_World();
+Process = Template();
 // List one or more processes to be composed into a system.
 system Process;
     </system>
