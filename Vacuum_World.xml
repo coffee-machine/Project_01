@@ -77,10 +77,10 @@ bool isLegal(int x, int y, int direction){
 		<declaration>// Place local declarations here.</declaration>
 		<location id="id0" x="-323" y="-212">
 		</location>
-		<location id="id1" x="136" y="-323">
+		<location id="id1" x="136" y="-323" color="#ff0000">
 			<name x="144" y="-357">ILLEGAL</name>
 		</location>
-		<location id="id2" x="-442" y="-323">
+		<location id="id2" x="-442" y="-323" color="#00ff00">
 			<name x="-433" y="-349">LEGAL</name>
 		</location>
 		<location id="id3" x="-136" y="59">
