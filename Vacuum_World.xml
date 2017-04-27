@@ -5,29 +5,29 @@
 int grid[3][3] = {(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)};
 string Robot = "O";
 
-void Do(string action) { //What action the Robod should do.
-    if(action == "forward") {
+void Do(int action) { //What action the Robod should do.
+    if(action == 1) { //forward
         
     }
-    else if(action == "turn") {
+    else if(action == 2) { //turn
         
     }
-    else if(action == "suck") {
+    else if(action == 3) { //suck
         
     }
 }
 
-void Facing(string direction){ //What direction the Robot is facing.
-    if(direction == "north") {
+void Facing(int direction){ //What direction the Robot is facing.
+    if(direction == 1) { //north
         
     }
-    else if(direction == "east") {
+    else if(direction == 2) { //east
         
     }
-    else if(direction == "west") {
+    else if(direction == 3) { //west
         
     } 
-    else if(direction == "south") {
+    else if(direction == 4) { //south
         
     }
 }
@@ -52,8 +52,14 @@ void next() {
     
 }
 
-bool isLegal(){
-    
+bool isLegal(int x, int y, int direction){
+    if(x == 0 &amp;&amp; x == y || y = x + 1 &amp;&amp; direction == 1){
+        return true;
+    }
+    if else(x == 0 &amp;&amp; y == 2 &amp;&amp; direction == 2){
+        return true;
+    }
+    return false;
 }</declaration>
 	<template>
 		<name x="5" y="5">Vacuum_World</name>
