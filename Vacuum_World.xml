@@ -3,12 +3,13 @@
 <nta>
 	<declaration>// Place global declarations here.
 //int grid[3][3] = {(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)};
+int hasVisited[3][3];
+int pos[3][3][4];
 int Robot = 8;
+int board[3][3];
 int x, y, direction;
 
 void createBoard(){
-    int board[3][3];
-    
     for (x = 0; x &lt; 3; x++){
         for (y = 0; y &lt; 3; y++){
             board[x][y] = 0;
@@ -17,12 +18,22 @@ void createBoard(){
     board[0][0] = Robot;
 }
 
-void Do(int action) { //What action the Robod should do.
+void checkIfVitited(){
+    
+}
+
+void Do(int action) { //What action the Robot should do.
     if(action == 1) { //forward
-        
+        if(direction == 1){
+            
+        }
     }
     else if(action == 2) { //turn
-        
+        if(direction &lt; 4){
+            direction++;
+        }
+        else
+            direction = 0;
     }
     else if(action == 3) { //suck
         
@@ -36,10 +47,10 @@ int Facing(int direction){ //What direction the Robot is facing.
     else if(direction == 2) { //east
         return 2;
     }
-    else if(direction == 3) { //west
+    else if(direction == 3) { //south
         return 3;
     } 
-    else if(direction == 4) { //south
+    else if(direction == 4) { //west
         return 4;
     }
 
@@ -107,7 +118,7 @@ bool isLegal(int x, int y, int direction){
 		<transition>
 			<source ref="id4"/>
 			<target ref="id1"/>
-			<label kind="guard" x="-365" y="-17">!isLegal(x, y, 3)</label>
+			<label kind="guard" x="-365" y="-17">!isLegal(x, y, 4)</label>
 			<nail x="-493" y="-110"/>
 			<nail x="-493" y="-17"/>
 			<nail x="136" y="-17"/>
@@ -129,7 +140,7 @@ bool isLegal(int x, int y, int direction){
 		<transition>
 			<source ref="id3"/>
 			<target ref="id1"/>
-			<label kind="guard" x="-127" y="8">!isLegal(x, y, 4)</label>
+			<label kind="guard" x="-127" y="8">!isLegal(x, y, 3)</label>
 			<nail x="-136" y="-17"/>
 			<nail x="136" y="-17"/>
 			<nail x="136" y="-221"/>
@@ -166,7 +177,7 @@ bool isLegal(int x, int y, int direction){
 		<transition>
 			<source ref="id3"/>
 			<target ref="id2"/>
-			<label kind="guard" x="-374" y="161">isLegal(x, y, 4)</label>
+			<label kind="guard" x="-374" y="161">isLegal(x, y, 3)</label>
 			<nail x="-136" y="153"/>
 			<nail x="-535" y="153"/>
 			<nail x="-535" y="-365"/>
@@ -186,7 +197,7 @@ bool isLegal(int x, int y, int direction){
 		<transition>
 			<source ref="id4"/>
 			<target ref="id2"/>
-			<label kind="guard" x="-501" y="-229">isLegal(x, y, 3)</label>
+			<label kind="guard" x="-501" y="-229">isLegal(x, y, 4)</label>
 		</transition>
 		<transition>
 			<source ref="id6"/>
@@ -196,14 +207,14 @@ bool isLegal(int x, int y, int direction){
 		<transition>
 			<source ref="id7"/>
 			<target ref="id3"/>
-			<label kind="guard" x="-212" y="-59">direction == 4</label>
+			<label kind="guard" x="-212" y="-59">direction == 3</label>
 			<label kind="comments" x="-323" y="-59">Facing South</label>
 			<nail x="-221" y="59"/>
 		</transition>
 		<transition>
 			<source ref="id7"/>
 			<target ref="id4"/>
-			<label kind="guard" x="-382" y="-110">direction == 3</label>
+			<label kind="guard" x="-382" y="-110">direction == 4</label>
 			<label kind="comments" x="-374" y="-127">Facing West</label>
 		</transition>
 		<transition>
