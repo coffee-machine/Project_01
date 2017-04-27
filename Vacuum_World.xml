@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+int grid[3][3] = {(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)};
+string Robot = "O";
+
+void Do(string action) { //What action the Robod should do.
+    if(action == "forward") {
+        
+    }
+    else if(action == "turn") {
+        
+    }
+    else if(action == "suck") {
+        
+    }
+}
+
+void Facing(string direction){ //What direction the Robot is facing.
+    if(direction == "north") {
+        
+    }
+    else if(direction == "east") {
+        
+    }
+    else if(direction == "west") {
+        
+    } 
+    else if(direction == "south") {
+        
+    }
+}
+
+void Dirt(int line, int row) { //Where there is dirt at.
+    
+}
+
+void In(int line, int row) { //Where the Robot is at.
+    
+}
+
+void old() {
+    
+}
+
+void new() {
+    
+}
+
+void next() {
+    
+}</declaration>
+	<template>
+		<name x="5" y="5">Vacuum_World</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="-238" y="-76">
+		</location>
+		<location id="id1" x="-416" y="-195">
+		</location>
+		<location id="id2" x="-416" y="-76" color="#ffc0cb">
+			<name x="-459" y="-51">START (0,0)</name>
+		</location>
+		<init ref="id2"/>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+Process = Vacuum_World();
+// List one or more processes to be composed into a system.
+system Process;
+    </system>
+	<queries>
+	</queries>
+</nta>
