@@ -3,11 +3,12 @@
 <nta>
 	<declaration>// Place global declarations here.
 //int grid[3][3] = {(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)};
-int hasVisited[3][3];
+bool hasVisited[3][3];
 int pos[3][3][4];
 int Robot = 8;
 int board[3][3];
-int x, y, direction;
+int x = 0, y = 0, direction = 1;
+int counter = 0;
 
 void createBoard(){
     for (x = 0; x &lt; 3; x++){
@@ -18,14 +19,44 @@ void createBoard(){
     board[0][0] = Robot;
 }
 
-void checkIfVitited(){
-    
+bool allGridsVisited(){
+    int i, j;
+    for(i = 0; i &lt; 3; i++) {
+        for(j = 0; i &lt; 3; j++) {
+            if(hasVisited[i][j] == true) {
+                counter++;
+            }
+        }
+    }
+
+    if(counter &gt;= 9){
+        return true;
+    }
+
+    return false;
 }
 
 void Do(int action) { //What action the Robot should do.
     if(action == 1) { //forward
-        if(direction == 1){
-            
+        if(direction == 1) { //north
+            if(y &lt; 2){
+                y++;
+            }
+        }
+        else if(direction == 2) { //east
+            if(x &lt; 2){
+                x++;
+            }
+        }
+        else if(direction == 3) { //south
+            if(y &gt; 0){
+                y--;
+            }
+        }
+        else if(direction == 4) { //west
+            if(x &gt; 0){
+                x--;
+            }
         }
     }
     else if(action == 2) { //turn
@@ -41,16 +72,16 @@ void Do(int action) { //What action the Robot should do.
 }
 
 int Facing(int direction){ //What direction the Robot is facing.
-    if(direction == 1) { //north
+    if(direction == 1) { //north, pos = 0
         return 1;
     }
-    else if(direction == 2) { //east
+    else if(direction == 2) { //east, pos = 1
         return 2;
     }
-    else if(direction == 3) { //south
+    else if(direction == 3) { //south, pos = 2
         return 3;
     } 
-    else if(direction == 4) { //west
+    else if(direction == 4) { //west, pos = 3
         return 4;
     }
 
@@ -62,7 +93,8 @@ bool Dirt(int x, int y) { //Where there is dirt at.
 }
 
 void In(int x, int y) { //Where the Robot is at.
-    
+    Facing(direction);
+    pos[0][0][direction] = Robot;
 }
 
 void old(int x, int y, int direction) {
@@ -89,145 +121,145 @@ bool isLegal(int x, int y, int direction){
 	<template>
 		<name x="5" y="5">Template</name>
 		<declaration>// Place local declarations here.</declaration>
-		<location id="id0" x="-323" y="-212">
+		<location id="id0" x="-119" y="-186">
 		</location>
-		<location id="id1" x="136" y="-323" color="#ff0000">
-			<name x="144" y="-357">ILLEGAL</name>
+		<location id="id1" x="340" y="-297" color="#ff0000">
+			<name x="348" y="-331">ILLEGAL</name>
 		</location>
-		<location id="id2" x="-442" y="-323" color="#00ff00">
-			<name x="-433" y="-349">LEGAL</name>
+		<location id="id2" x="-238" y="-297" color="#00ff00">
+			<name x="-229" y="-323">LEGAL</name>
 		</location>
-		<location id="id3" x="-136" y="59">
+		<location id="id3" x="68" y="85">
 		</location>
-		<location id="id4" x="-442" y="-110">
+		<location id="id4" x="-238" y="-84">
 		</location>
-		<location id="id5" x="25" y="-110">
+		<location id="id5" x="229" y="-84">
 		</location>
-		<location id="id6" x="-221" y="-323">
+		<location id="id6" x="-17" y="-297">
 		</location>
-		<location id="id7" x="-221" y="-110" color="#ffc0cb">
-			<name x="-212" y="-102">START</name>
+		<location id="id7" x="-17" y="-84" color="#ffc0cb">
+			<name x="-8" y="-76">START</name>
 		</location>
 		<init ref="id7"/>
 		<transition>
 			<source ref="id0"/>
 			<target ref="id7"/>
-			<label kind="assignment" x="-314" y="-170">Do(1)</label>
-			<label kind="comments" x="-348" y="-187">Go Forward</label>
+			<label kind="assignment" x="-110" y="-144">Do(1)</label>
+			<label kind="comments" x="-144" y="-161">Go Forward</label>
 		</transition>
 		<transition>
 			<source ref="id4"/>
 			<target ref="id1"/>
-			<label kind="guard" x="-365" y="-17">!isLegal(x, y, 4)</label>
-			<nail x="-493" y="-110"/>
-			<nail x="-493" y="-17"/>
-			<nail x="136" y="-17"/>
+			<label kind="guard" x="-161" y="9">!isLegal(x, y, 4)</label>
+			<nail x="-289" y="-84"/>
+			<nail x="-289" y="9"/>
+			<nail x="340" y="9"/>
 		</transition>
 		<transition>
 			<source ref="id1"/>
 			<target ref="id5"/>
-			<label kind="assignment" x="76" y="-204">Do(2)</label>
-			<label kind="comments" x="76" y="-187">Turn</label>
+			<label kind="assignment" x="280" y="-178">Do(2)</label>
+			<label kind="comments" x="280" y="-161">Turn</label>
 		</transition>
 		<transition>
 			<source ref="id1"/>
 			<target ref="id6"/>
-			<label kind="assignment" x="51" y="-391">Do(2)</label>
-			<label kind="comments" x="51" y="-408">Turn</label>
-			<nail x="136" y="-365"/>
-			<nail x="-221" y="-365"/>
+			<label kind="assignment" x="255" y="-365">Do(2)</label>
+			<label kind="comments" x="255" y="-382">Turn</label>
+			<nail x="340" y="-339"/>
+			<nail x="-17" y="-339"/>
 		</transition>
 		<transition>
 			<source ref="id3"/>
 			<target ref="id1"/>
-			<label kind="guard" x="-127" y="8">!isLegal(x, y, 3)</label>
-			<nail x="-136" y="-17"/>
-			<nail x="136" y="-17"/>
-			<nail x="136" y="-221"/>
+			<label kind="guard" x="77" y="34">!isLegal(x, y, 3)</label>
+			<nail x="68" y="9"/>
+			<nail x="340" y="9"/>
+			<nail x="340" y="-195"/>
 		</transition>
 		<transition>
 			<source ref="id1"/>
 			<target ref="id3"/>
-			<label kind="assignment" x="17" y="59">Do(2)</label>
-			<label kind="comments" x="17" y="42">Turn</label>
-			<nail x="178" y="-323"/>
-			<nail x="178" y="59"/>
+			<label kind="assignment" x="221" y="85">Do(2)</label>
+			<label kind="comments" x="221" y="68">Turn</label>
+			<nail x="382" y="-297"/>
+			<nail x="382" y="85"/>
 		</transition>
 		<transition>
 			<source ref="id2"/>
 			<target ref="id0"/>
-			<label kind="guard" x="-374" y="-280">!Dirt(x, y)</label>
+			<label kind="guard" x="-170" y="-254">!Dirt(x, y)</label>
 		</transition>
 		<transition>
 			<source ref="id1"/>
 			<target ref="id4"/>
-			<label kind="assignment" x="-42" y="110">Do(2)</label>
-			<label kind="comments" x="-42" y="93">Turn</label>
-			<nail x="229" y="-323"/>
-			<nail x="229" y="110"/>
-			<nail x="-442" y="110"/>
+			<label kind="assignment" x="162" y="136">Do(2)</label>
+			<label kind="comments" x="162" y="119">Turn</label>
+			<nail x="433" y="-297"/>
+			<nail x="433" y="136"/>
+			<nail x="-238" y="136"/>
 		</transition>
 		<transition>
 			<source ref="id5"/>
 			<target ref="id2"/>
-			<label kind="guard" x="-229" y="-416">isLegal(x, y, 2)</label>
-			<nail x="25" y="-391"/>
-			<nail x="-442" y="-391"/>
+			<label kind="guard" x="-25" y="-390">isLegal(x, y, 2)</label>
+			<nail x="229" y="-365"/>
+			<nail x="-238" y="-365"/>
 		</transition>
 		<transition>
 			<source ref="id3"/>
 			<target ref="id2"/>
-			<label kind="guard" x="-374" y="161">isLegal(x, y, 3)</label>
-			<nail x="-136" y="153"/>
-			<nail x="-535" y="153"/>
-			<nail x="-535" y="-365"/>
-			<nail x="-442" y="-365"/>
+			<label kind="guard" x="-170" y="187">isLegal(x, y, 3)</label>
+			<nail x="68" y="179"/>
+			<nail x="-331" y="179"/>
+			<nail x="-331" y="-339"/>
+			<nail x="-238" y="-339"/>
 		</transition>
 		<transition>
 			<source ref="id5"/>
 			<target ref="id1"/>
-			<label kind="guard" x="34" y="-110">!isLegal(x, y, 2)</label>
-			<nail x="136" y="-110"/>
+			<label kind="guard" x="238" y="-84">!isLegal(x, y, 2)</label>
+			<nail x="340" y="-84"/>
 		</transition>
 		<transition>
 			<source ref="id6"/>
 			<target ref="id1"/>
-			<label kind="guard" x="-153" y="-323">!isLegal(x, y, 1)</label>
+			<label kind="guard" x="51" y="-297">!isLegal(x, y, 1)</label>
 		</transition>
 		<transition>
 			<source ref="id4"/>
 			<target ref="id2"/>
-			<label kind="guard" x="-501" y="-229">isLegal(x, y, 4)</label>
+			<label kind="guard" x="-297" y="-203">isLegal(x, y, 4)</label>
 		</transition>
 		<transition>
 			<source ref="id6"/>
 			<target ref="id2"/>
-			<label kind="guard" x="-357" y="-348">isLegal(x, y, 1)</label>
+			<label kind="guard" x="-153" y="-322">isLegal(x, y, 1)</label>
 		</transition>
 		<transition>
 			<source ref="id7"/>
 			<target ref="id3"/>
-			<label kind="guard" x="-212" y="-59">direction == 3</label>
-			<label kind="comments" x="-323" y="-59">Facing South</label>
-			<nail x="-221" y="59"/>
+			<label kind="guard" x="-8" y="-33">direction == 3</label>
+			<label kind="comments" x="-119" y="-33">Facing South</label>
+			<nail x="-17" y="85"/>
 		</transition>
 		<transition>
 			<source ref="id7"/>
 			<target ref="id4"/>
-			<label kind="guard" x="-382" y="-110">direction == 4</label>
-			<label kind="comments" x="-374" y="-127">Facing West</label>
+			<label kind="guard" x="-178" y="-84">direction == 4</label>
+			<label kind="comments" x="-170" y="-101">Facing West</label>
 		</transition>
 		<transition>
 			<source ref="id7"/>
 			<target ref="id5"/>
-			<label kind="guard" x="-144" y="-110">direction == 2</label>
-			<label kind="comments" x="-136" y="-136">Facing East</label>
+			<label kind="guard" x="60" y="-84">direction == 2</label>
+			<label kind="comments" x="68" y="-110">Facing East</label>
 		</transition>
 		<transition>
 			<source ref="id7"/>
 			<target ref="id6"/>
-			<label kind="guard" x="-212" y="-221">direction == 1</label>
-			<label kind="comments" x="-212" y="-238">Facing North</label>
+			<label kind="guard" x="-8" y="-195">direction == 1</label>
+			<label kind="comments" x="-8" y="-212">Facing North</label>
 		</transition>
 	</template>
 	<system>// Place template instantiations here.
@@ -236,5 +268,11 @@ Process = Template();
 system Process;
     </system>
 	<queries>
+		<query>
+			<formula>E&lt;&gt; (allGridsVisited == true &amp;&amp; pos[0][0][0] || pos[0][0][1] || pos[0][0][2] || pos[0][0][3])
+			</formula>
+			<comment>
+			</comment>
+		</query>
 	</queries>
 </nta>

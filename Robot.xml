@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+const int NORTH := 1;
+const int EAST := 2;
+const int SOUTH := 3;
+const int WEST := 4;
+
+int direction := 1;
+
+int x := 0; // x coordinate
+int y := 0; // y coordinate
+
+bool robotPosition[3][3] := {{1,0,0},{0,0,0},{0,0,0}};
+
+bool checkStartPosition() {
+    return (robotPosition[0][0]);
+}
+
+bool isAtStartPosition := true;
+
+bool isFacingWall() {
+    if (direction == NORTH &amp;&amp; y == 2) {
+        return true;
+    }
+    if (direction == EAST &amp;&amp; x == 2) {
+        return true;
+    }
+    if (direction == SOUTH &amp;&amp; y == 0) {
+        return true;
+    }
+    if (direction == WEST &amp;&amp; x == 0) {
+        return true;
+    }
+    return false;
+}
+
+// ONLY USED FOR QUERY.
+// ROBOT DOES NOT USE THIS ARRAY.
+int visited[3][3] = {{1,0,0},{0,0,0},{0,0,0}};
+
+void updateRobotPosition() {
+    bool updatedRobotPosition[3][3] := {{0,0,0},{0,0,0},{0,0,0}};
+    updatedRobotPosition[x][y] := 1;
+    visited[x][y] := 1;
+    robotPosition := updatedRobotPosition;
+}
+
+void moveForward() {
+    if (direction == NORTH) {
+        y++;
+    }
+    if (direction == EAST) {
+        x++;
+    }
+    if (direction == SOUTH) {
+        y--;
+    }
+    if (direction == WEST) {
+        x--;
+    }
+    updateRobotPosition();
+}
+
+void turn() {
+    if (direction &lt; 4) {
+        direction++;
+    } else {
+        direction := 1;
+    }
+}
+
+</declaration>
+	<template>
+		<name x="5" y="5">Robot</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="-1819" y="-765">
+			<name x="-1829" y="-799">RobotHasTurned</name>
+		</location>
+		<location id="id1" x="-1606" y="-926">
+			<name x="-1657" y="-960">RobotHasMoved</name>
+		</location>
+		<location id="id2" x="-1606" y="-765">
+			<name x="-1589" y="-790">RobotFacesNoWall</name>
+			<label kind="comments" x="-1589" y="-765">Robot can move 
+forward or turn</label>
+		</location>
+		<location id="id3" x="-1606" y="-637">
+			<name x="-1632" y="-620">Decides</name>
+		</location>
+		<init ref="id3"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id3"/>
+			<label kind="comments" x="-1963" y="-629">Robot is ready for 
+a new decision</label>
+			<nail x="-1819" y="-637"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id0"/>
+			<label kind="assignment" x="-1734" y="-688">turn()</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="assignment" x="-1734" y="-756">turn()</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="comments" x="-1402" y="-968">Robot is ready for 
+a new decision</label>
+			<nail x="-1411" y="-926"/>
+			<nail x="-1411" y="-637"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="assignment" x="-1598" y="-858">moveForward()</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-1589" y="-705">!isFacingWall()</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+// List one or more processes to be composed into a system.
+system Robot;
+    </system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt; x == 0 &amp;&amp; y == 0 &amp;&amp; visited[2][2]
+			</formula>
+			<comment>Does there exist a computation where the robot, having been once at (2,2) will go back to (0,0)? 
+			</comment>
+		</query>
+		<query>
+			<formula>A[] not deadlock
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; x == 0 &amp;&amp; y == 0 &amp;&amp; (1 == visited[1][0] == visited[2][0] == visited[0][1] == visited[1][1] == visited[2][1] == visited[0][2] == visited[1][2] == visited[2][2])
+			</formula>
+			<comment>Does there exist a computation where the robot, having visited every square will go back to (0,0)?
+			</comment>
+		</query>
+	</queries>
+</nta>
