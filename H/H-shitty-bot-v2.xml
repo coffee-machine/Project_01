@@ -3,6 +3,9 @@ int maxX = 3;
 int maxY = 3;
 int numFaces = 4;
 
+int totalTurns;
+int totalForwards;
+
 bool visited[3][3];
 int rules[3][3][4];
 
@@ -13,10 +16,12 @@ int robotFacing;
 int turn() {
 	if(robotFacing == 3) {
 		robotFacing = 0;
+		totalTurns++;
 		return robotFacing;
 	}
 	else {
 		robotFacing++;
+		totalTurns++;
 		return robotFacing;
 	}
 }
@@ -24,15 +29,19 @@ int turn() {
 void forward() {
 	if(robotFacing == 0) { //robot faces north, increase y
 		robotPosY = robotPosY + 1;
+		totalForwards++;
 	}
 	else if(robotFacing == 1) { //robot faces east, increase x
 		robotPosX = robotPosX + 1;
+		totalForwards++;
 	}
 	else if(robotFacing == 2) { //robot faces south, decrease y
 		robotPosY = robotPosY - 1;
+		totalForwards++;
 	}
 	else { //robot faces west, decrease x
 		robotPosX = robotPosX - 1;
+		totalForwards++;
 	}
 }
 
@@ -67,6 +76,9 @@ bool allVisited() {
 	return true;
 }
 </declaration><template><name x="5" y="5">Template</name><declaration>// Place local declarations here.
+clock turnTime;
+clock forwardTime;
+
 void firstinit() {
 	robotPosX = 0;
 	robotPosY = 0;
