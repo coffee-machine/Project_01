@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
 <nta>
-	<declaration>clock time1, time2;
+	<declaration>// Place global declarations here.
+clock time, cycleTime;
 
-// Place global declarations here.
 const int NORTH := 0;
 const int EAST := 1;
 const int SOUTH := 2;
@@ -81,8 +81,6 @@ void updateRobotPosition() {
     visited[x][y] := 1;
     robotPosition := updatedRobotPosition;
     checkIfEverySquareVisited();
-    totalTurns++;
-    totalForwards++;
 }
 
 void moveForward() {
@@ -100,6 +98,7 @@ void moveForward() {
         x--;
     }
     updateRobotPosition();
+    totalForwards++;
 }
 
 void turn() {
@@ -109,6 +108,7 @@ void turn() {
     } else {
         direction := 0;
     }
+    totalTurns++;
 }
 
 void executeRule() {
@@ -124,21 +124,21 @@ void executeRule() {
 	<template>
 		<name x="5" y="5">Robot</name>
 		<declaration>// Place local declarations here.</declaration>
-		<location id="id0" x="-1895" y="-569">
-			<name x="-1878" y="-578">RuleRead</name>
+		<location id="id0" x="-2014" y="-493">
+			<name x="-2048" y="-476">RuleRead</name>
 		</location>
-		<location id="id1" x="-2380" y="-586">
+		<location id="id1" x="-2159" y="-637">
 		</location>
-		<location id="id2" x="-2014" y="-518">
-			<name x="-2048" y="-501">RuleExists</name>
+		<location id="id2" x="-2014" y="-569">
+			<name x="-1997" y="-578">RuleExists</name>
 		</location>
 		<location id="id3" x="-2014" y="-636">
 		</location>
-		<location id="id4" x="-2227" y="-841">
-			<name x="-2237" y="-875">RobotHasTurned</name>
+		<location id="id4" x="-2337" y="-969">
+			<name x="-2473" y="-977">RobotHasTurned</name>
 		</location>
 		<location id="id5" x="-2014" y="-969">
-			<name x="-2065" y="-1003">RobotHasMoved</name>
+			<name x="-2006" y="-994">RobotHasMoved</name>
 		</location>
 		<location id="id6" x="-2014" y="-841">
 			<name x="-1997" y="-866">RobotFacesNoWall</name>
@@ -151,33 +151,49 @@ forward or turn</label>
 		<init ref="id1"/>
 		<transition>
 			<source ref="id0"/>
-			<target ref="id3"/>
-			<label kind="assignment" x="-1946" y="-620">executeRule()</label>
+			<target ref="id4"/>
+			<label kind="guard" x="-2337" y="-484">ruleToFollow == 1 &amp;&amp; cycleTime == 1</label>
+			<label kind="assignment" x="-2210" y="-467">turn()</label>
+			<nail x="-2337" y="-493"/>
+			<nail x="-2337" y="-612"/>
+			<nail x="-2337" y="-739"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-1963" y="-484">ruleToFollow == 2 &amp;&amp; cycleTime == 5</label>
+			<label kind="assignment" x="-1870" y="-467">moveForward()</label>
+			<nail x="-1623" y="-493"/>
+			<nail x="-1623" y="-1062"/>
+			<nail x="-2014" y="-1062"/>
 		</transition>
 		<transition>
 			<source ref="id2"/>
 			<target ref="id0"/>
-			<label kind="assignment" x="-1963" y="-544">getRule()</label>
+			<label kind="assignment" x="-2108" y="-595">getRule()</label>
 		</transition>
 		<transition>
 			<source ref="id1"/>
 			<target ref="id3"/>
-			<label kind="assignment" x="-2295" y="-595">initRuleBook()</label>
+			<label kind="assignment" x="-2278" y="-646">initRuleBook()</label>
 		</transition>
 		<transition>
 			<source ref="id3"/>
 			<target ref="id2"/>
-			<label kind="guard" x="-2125" y="-595">doesRuleExist()</label>
+			<label kind="guard" x="-2006" y="-620">doesRuleExist()</label>
 		</transition>
 		<transition>
 			<source ref="id4"/>
 			<target ref="id3"/>
-			<nail x="-2226" y="-636"/>
+			<label kind="assignment" x="-2278" y="-705">cycleTime := 0</label>
+			<nail x="-2278" y="-714"/>
+			<nail x="-2176" y="-714"/>
 		</transition>
 		<transition>
 			<source ref="id5"/>
 			<target ref="id3"/>
-			<label kind="comments" x="-1784" y="-933">...and we start again</label>
+			<label kind="assignment" x="-1793" y="-765">cycleTime := 0</label>
+			<label kind="comments" x="-1819" y="-790">...and we start again</label>
 			<nail x="-1801" y="-968"/>
 			<nail x="-1801" y="-636"/>
 		</transition>
@@ -189,16 +205,20 @@ forward or turn</label>
 		<transition>
 			<source ref="id7"/>
 			<target ref="id4"/>
-			<label kind="assignment" x="-2142" y="-764">turn()</label>
+			<label kind="guard" x="-2201" y="-884">cycleTime == 1</label>
+			<label kind="assignment" x="-2167" y="-867">turn()</label>
 		</transition>
 		<transition>
 			<source ref="id6"/>
 			<target ref="id4"/>
-			<label kind="assignment" x="-2142" y="-832">turn()</label>
+			<label kind="guard" x="-2244" y="-1011">cycleTime == 1</label>
+			<label kind="assignment" x="-2218" y="-994">turn()</label>
+			<nail x="-2142" y="-969"/>
 		</transition>
 		<transition>
 			<source ref="id6"/>
 			<target ref="id5"/>
+			<label kind="guard" x="-2006" y="-935">cycleTime == 5</label>
 			<label kind="assignment" x="-2006" y="-918">moveForward()</label>
 		</transition>
 		<transition>
