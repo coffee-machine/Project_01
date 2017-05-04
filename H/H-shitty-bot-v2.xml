@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_1.dtd'><nta><declaration>// Place global declarations here.
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
 //int maxX = 3;
 //int maxY = 3;
 //int numFaces = 4;
-
-clock timer;
 
 int totalTurns;
 int totalForwards;
@@ -77,7 +78,10 @@ bool allVisited() {
 	}
 	return true;
 }
-</declaration><template><name x="5" y="5">Template</name><declaration>// Place local declarations here.
+</declaration>
+	<template>
+		<name x="5" y="5">Template</name>
+		<declaration>// Place local declarations here.
 //clock turnTime;
 //clock forwardTime;
 
@@ -90,8 +94,110 @@ void firstinit() {
 	//rules[0][1][0] = 1;
 	//rules[0][2][0] = 2;
 	//rules[0][2][1] = 1;
-}</declaration><location id="id0" x="-17688" y="208"></location><location id="id1" x="-17736" y="-56"></location><location id="id2" x="-17640" y="-56"></location><location id="id3" x="-17640" y="24"></location><location id="id4" x="-17736" y="24"></location><location id="id5" x="-17024" y="-112"></location><location id="id6" x="-16976" y="-8"></location><location id="id7" x="-17072" y="-8"></location><location id="id8" x="-17024" y="144"></location><location id="id9" x="-17360" y="144"><name x="-17344" y="152">Robot</name></location><location id="id10" x="-17688" y="144"></location><location id="id11" x="-17360" y="208"></location><init ref="id11"/><transition><source ref="id0"/><target ref="id10"/><label kind="assignment" x="-17752" y="168">timer = 0</label></transition><transition><source ref="id1"/><target ref="id9"/><label kind="assignment" x="-17712" y="-144">visited[robotPosX][robotPosY] = true</label><nail x="-17736" y="-144"/><nail x="-17424" y="-144"/></transition><transition><source ref="id2"/><target ref="id1"/><label kind="guard" x="-17712" y="-96">timer == 5</label><label kind="assignment" x="-17712" y="-80">forward()</label></transition><transition><source ref="id4"/><target ref="id1"/><label kind="guard" x="-17808" y="-32">timer == 1</label><label kind="assignment" x="-17776" y="-16">turn()</label></transition><transition><source ref="id3"/><target ref="id2"/><label kind="assignment" x="-17632" y="-24">rules[robotPosX][robotPosY][robotFacing] = 1</label></transition><transition><source ref="id10"/><target ref="id4"/><label kind="assignment" x="-18004" y="82">rules[robotPosX][robotPosY][robotFacing] = 2</label></transition><transition><source ref="id10"/><target ref="id3"/><label kind="guard" x="-17648" y="64">!outOfBounds()</label></transition><transition><source ref="id5"/><target ref="id9"/><label kind="assignment" x="-17280" y="-112">visited[robotPosX][robotPosY] = true</label><nail x="-17304" y="-112"/></transition><transition><source ref="id6"/><target ref="id5"/><label kind="assignment" x="-16992" y="-64">turn()</label></transition><transition><source ref="id7"/><target ref="id5"/><label kind="assignment" x="-17112" y="-64">forward()</label></transition><transition><source ref="id8"/><target ref="id6"/><label kind="guard" x="-17288" y="56">rules[robotPosX][robotPosY][robotFacing] == 2</label></transition><transition><source ref="id8"/><target ref="id7"/><label kind="guard" x="-17320" y="24">rules[robotPosX][robotPosY][robotFacing] == 1</label></transition><transition><source ref="id9"/><target ref="id8"/><label kind="guard" x="-17344" y="120">rules[robotPosX][robotPosY][robotFacing] != 0</label></transition><transition><source ref="id11"/><target ref="id9"/><label kind="assignment" x="-17416" y="168">firstinit()</label></transition><transition><source ref="id9"/><target ref="id0"/><label kind="guard" x="-17664" y="120">rules[robotPosX][robotPosY][robotFacing] == 0</label></transition></template><system>// Place template instantiations here.
+}</declaration>
+		<location id="id0" x="-17736" y="-56">
+		</location>
+		<location id="id1" x="-17640" y="-56">
+		</location>
+		<location id="id2" x="-17640" y="24">
+		</location>
+		<location id="id3" x="-17736" y="24">
+		</location>
+		<location id="id4" x="-17024" y="-112">
+		</location>
+		<location id="id5" x="-16976" y="-8">
+		</location>
+		<location id="id6" x="-17072" y="-8">
+		</location>
+		<location id="id7" x="-17024" y="144">
+		</location>
+		<location id="id8" x="-17360" y="144">
+			<name x="-17344" y="152">Robot</name>
+		</location>
+		<location id="id9" x="-17688" y="144">
+		</location>
+		<location id="id10" x="-17360" y="208">
+		</location>
+		<init ref="id10"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id8"/>
+			<label kind="assignment" x="-17712" y="-144">visited[robotPosX][robotPosY] = true</label>
+			<nail x="-17736" y="-144"/>
+			<nail x="-17424" y="-144"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="assignment" x="-17712" y="-80">forward()</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id0"/>
+			<label kind="assignment" x="-17782" y="-17">turn()</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="assignment" x="-17632" y="-24">rules[robotPosX][robotPosY][robotFacing] = 1</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id3"/>
+			<label kind="assignment" x="-18004" y="82">rules[robotPosX][robotPosY][robotFacing] = 2</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-17648" y="64">!outOfBounds()</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id8"/>
+			<label kind="assignment" x="-17280" y="-112">visited[robotPosX][robotPosY] = true</label>
+			<nail x="-17304" y="-112"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id4"/>
+			<label kind="assignment" x="-16992" y="-64">turn()</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id4"/>
+			<label kind="assignment" x="-17112" y="-64">forward()</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-17288" y="56">rules[robotPosX][robotPosY][robotFacing] == 2</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="guard" x="-17320" y="24">rules[robotPosX][robotPosY][robotFacing] == 1</label>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id7"/>
+			<label kind="guard" x="-17344" y="120">rules[robotPosX][robotPosY][robotFacing] != 0</label>
+		</transition>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id8"/>
+			<label kind="assignment" x="-17416" y="168">firstinit()</label>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id9"/>
+			<label kind="guard" x="-17664" y="120">rules[robotPosX][robotPosY][robotFacing] == 0</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
 Process = Template();
 
 // List one or more processes to be composed into a system.
-system Process;</system></nta>
+system Process;</system>
+	<queries>
+	</queries>
+</nta>
